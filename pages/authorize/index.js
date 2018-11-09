@@ -74,16 +74,19 @@ Page({
   login: function () {
     let that = this;
     let token = wx.getStorageSync('token');
+    console.log('判断token是否过期1')
+    console.log(token)
+
     if (token) {
       wx.request({
-        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/check-token',
-        
+        // url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/check-token',
+        url: 'https://hicloudcollege.com:3389' + '/auth_token/',
         data: {
           token: token
         },
         success: function (res) {
-          
-          if (res.data.code != 0) {
+          console.log('判断token是否过期2')
+          if (res.data['code'] != 0) {
             wx.removeStorageSync('token')
             that.login();
           } else {
@@ -95,42 +98,48 @@ Page({
       })
       return;
     }
+
     wx.login({
       success: function (res) {
+        var iv = res.iv ;
+        var encryptedData = res.encryptedData ;
+
         wx.request({
-          url: 'https://hicloudcollege.com' + '/mobile_login/',
+          url: 'https://hicloudcollege.com:3389' + '/wx_auth/',
           data: {
-            code: res.code
+            code: res.code,
           },
           
           success: function (res) {
-            console.log(res)
-            if (res.data.code == 10000) {
+            console.log(res.data)
+            console.log(res.data['token'])
+            if (res.data['code'] == 1000) {
               // 去注册
               that.registerUser();
               return;
             }
-            // if (res.data.code != 0) {
-            //   // 登录错误
+            if (res.data.code != 0) {
+              // 登录错误
               
-            //   wx.hideLoading();
-            //   wx.showModal({
+              wx.hideLoading();
+              wx.showModal({
                 
-            //     title: '提示',
-            //     content: '无法登录，请重试1',
-            //     showCancel: false
-            //   })
-            //   return;
-            // }
-            // wx.setStorageSync('token', res.data.data.token)
-            // wx.setStorageSync('uid', res.data.data.uid)
-            // 回到原来的地方放
+                title: '提示',
+                content: '无法登录，请重试1',
+                showCancel: false
+              })
+              return;
+            }
+            wx.setStorageSync('token', res.data['token'])
+            wx.setStorageSync('uid', res.data['uid'])
+            //回到原来的地方放
             wx.navigateBack();
           }
         })
       }
     })
   },
+
   registerUser: function () {
     var that = this;
     wx.login({
@@ -141,10 +150,12 @@ Page({
             var iv = res.iv;
             var encryptedData = res.encryptedData;
             // 下面开始调用注册接口
+ 
             wx.request({
-              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/wxapp/register/complex',
-              data: { code: code, encryptedData: encryptedData, iv: iv }, // 设置请求的 参数
+              url: 'https://hicloudcollege.com:3389/' +'wx_registry/',
+              data: { code: code, encryptedData: encryptedData, iv: iv}, // 设置请求的 参数
               success: (res) => {
+                console.log(res)
                 wx.hideLoading();
                 that.login();
               }
