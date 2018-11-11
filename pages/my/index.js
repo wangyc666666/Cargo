@@ -8,7 +8,7 @@ Page({
     score_sign_continuous:0
   },
 	onLoad() {
-    
+   
 	},	
   onShow() {
     let that = this;
@@ -30,11 +30,15 @@ Page({
   aboutUs : function () {
     wx.showModal({
       title: '关于我们',
-      content: '本系统基于开源小程序商城系统 https://github.com/EastWorld/wechat-app-mall 搭建，祝大家使用愉快！',
+      content: '详情请访问https://hicloudcollege.com/',
       showCancel:false
     })
   },
+
   getPhoneNumber: function(e) {
+    console.log(e.detail.errMsg)
+    console.log(e.detail.iv)
+    console.log(e.detail.encryptedData) 
     if (!e.detail.errMsg || e.detail.errMsg != "getPhoneNumber:ok") {
       wx.showModal({
         title: '提示',
@@ -45,11 +49,12 @@ Page({
     }
     var that = this;
     wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/wxapp/bindMobile',
+      url: app.globalData.serverDomin + 'bindMobile',
       data: {
         token: wx.getStorageSync('token'),
         encryptedData: e.detail.encryptedData,
-        iv: e.detail.iv
+        iv: e.detail.iv,
+        code: res.data.code
       },
       success: function (res) {
         if (res.data.code == 0) {

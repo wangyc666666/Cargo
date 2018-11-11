@@ -6,7 +6,7 @@
                     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
             <block wx:for="{{banners}}" wx:key="id">
                 <swiper-item>
-                    <image bindtap="tapBanner" data-id="{{item.businessId}}" src="{{item.picUrl}}_m" class="slide-image" width="750rpx" height="562.5rpx"/>
+                    <image bindtap="tapBanner" data-id="{{item.id}}" src="https://hicloudcollege.com/medias/{{item.newpic}}" class="slide-image" width="750rpx" height="562.5rpx"/>
                 </swiper-item>
             </block>
         </swiper>
@@ -20,7 +20,7 @@
         <scroll-view class="type-navbar" scroll-x="true">
             <view class="type-box" wx:for-items="{{categories}}" wx:key="id">
                 <view id="{{item.id}}" class="type-navbar-item {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="tabClick">
-                    {{item.name}}
+                   {{item.name}}
                 </view>
             </view>
         </scroll-view>
@@ -35,14 +35,14 @@
     </view>
   </view>
     <view wx:if="{{noticeList}}" class="notice">
-      <view class="notice_iteml">公告：</view>
-      <swiper wx:if="{{noticeList}}" class="notice_swiper" vertical="true" autoplay="true" circular="true" interval="3000">
+      <view class="notice_iteml">公告: </view>
+      <!-- <swiper wx:if="{{noticeList}}" class="notice_swiper" vertical="true" autoplay="true" circular="true" interval="3000">
         <navigator wx:for-items="{{noticeList.dataList}}" wx:key="id" url="/pages/notice/show?id={{item.id}}" open-type="navigate">
           <swiper-item >
-            <view class="notice_itemr">{{item.title}}</view>
+            <view class="notice_itemr">{{noticeList}}</view>
           </swiper-item>
         </navigator>
-      </swiper>
+      </swiper> -->
     </view>
     <view class="coupons" hidden="{{hasNoCoupons}}">
         <scroll-view class="coupons-scroll" scroll-x="true">
@@ -58,12 +58,12 @@
     <view class="goods-container">
         <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap" data-id="{{item.id}}">
            <view class="img-box">
-              <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
+              <image src="https://hicloudcollege.com/medias/{{item.newpic}}" class="image" mode="aspectFill" lazy-load="true"/>
            </view>
-           <view class="goods-title">{{item.name}}</view>
+           <view class="goods-title">{{item.title}}</view>
            <view style='display:flex;'>
-            <view class="goods-price">¥ {{item.minPrice}}</view>
-            <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+            <view class="goods-price">¥ {{item.course_price}}</view>
+            <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price" style='color:#aaa;text-decoration:line-through'>¥ {{item.course_price}}</view>
            </view>           
         </view>
     </view>

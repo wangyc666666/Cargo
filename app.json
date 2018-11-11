@@ -17,12 +17,13 @@
     "pages/withdraw/index",
     "pages/kanjia/index",
     "pages/authorize/index",
-    "pages/score-excharge/index"
+    "pages/score-excharge/index",
+    "pages/goods-in/index"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "cloud云学院",
     "navigationBarTextStyle":"black",
     "onReachBottomDistance":50
   },
@@ -37,12 +38,8 @@
       "iconPath": "images/nav/home-off.png",
       "selectedIconPath": "images/nav/home-on.png",
       "text": "首页"
-    }, {
-      "pagePath": "pages/shop-cart/index",
-      "iconPath": "images/nav/cart-off.png",
-      "selectedIconPath": "images/nav/cart-on.png",
-      "text": "购物车"
     },
+
     {
       "pagePath": "pages/my/index",
       "iconPath": "images/nav/my-off.png",
